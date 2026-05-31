@@ -2,6 +2,25 @@
 
 Official Repositiory for the PMOF Dataset.
 
+## Getting started:
+
+pip install -r requirements.txt
+
+## Dataset Overview
+
+Start with ```data_analysis.ipynb``` to get to know the dataset and look at some samples.
+
+## Augmentation Pipeline
+
+Start with ```augmentation/augmentation_pipeline.ipynb``` to work with our obb-augmentation pipeline.
+
+## Benchmarks
+
+Checkout ```benchmarks/README.md``` for instructions to follow the full workflow from data prep to training and evaluation for our benchmarks.
+
+## Support
+For support, write: stella.wermuth@hsbi.de
+
 ## Code Structure
 ```
 ./
@@ -31,59 +50,30 @@ Official Repositiory for the PMOF Dataset.
 │       ├── databasedir_config.py
 │       └── logging_config.py
 │
-├── yolo/
+├── benchmarks/
 │   ├── README.md            #read README, full workflow for benchmarking explained here
 │   ├── dataset_txt/         #txt-files with all images for a dataset configurations, referenced in yaml-files
-│   ├── paper_plots/
 │   ├── runs/
-│   ├── video_samples/
 │   ├── yaml/                #yaml-files references in training
-│   ├── train_yolo.py        #used for training
-│   ├── find_best_epoch.py   #find best epoch for trained models on one validation set
-│   ├── yolo11n.pt
-│   ├── yolo11n-obb.pt
-│   ├── yolo11s.pt
-│   ├── yolo11s-obb.pt
-│   ├── dataprep_yoloformat.ipynb
-│   ├── generateYOLO-TXT.ipynb
-│   ├── train_yolo11.ipynb    #used for quick tests, not for "real" training
-│   └── evaluate_predictions.ipynb
+│   ├── 1_dataprep_yoloformat.ipynb
+│   ├── 2_generateYOLO-TXT.ipynb
+│   ├── 3_train_yolo.py        #used for training
+│   ├── 4_find_best_epoch.py   #find best epoch for trained models on one validation set
+│   └── 5_evaluate_predictions.ipynb
 │
 ├── augmentation/            #generate augemented frames
 │   ├── augmentation_pipeline.ipynb
 │   ├── augutils.py
 │   └── bg_augmentation.ipynb
 │
-├── bboxtype/                #plotting to compare aabb vs obb
-│   ├── bbox_comparison.ipynb
-│   ├── instances_default.json
-│   └── rec7_001728.png
-│
-├── obbsizes/                # dir for csv-files to study bbox sizes
 ├── paper_plots/             # dir for paper-ready plots and Times-font
-├── video_samples/           # dir for mp4-samples
+├── video_samples/           # dir to save videos
+
 │
-├── dataprep.ipynb           # to rename frames & adapt annotations to new names (just for my postprocessing)
 ├── data_analysis.ipynb      # data analysis (except bounding box sizes)
-├── obbsize_analysis.ipynb   # calculate csv-files (stored in obbsized) and analyse them
 ├── paper_ready_PMOF_samples.ipynb  # samples (train & val& bg), in paper-ready format
 ├── paper_ready_aug_samples.ipynb    # samples of aug CEPDOF, aug PMOF and HABBOF in paper-ready format
 │
 ├── requirements.txt
 └── README.md
 ```
-
-## Getting started:
-
-pip install -r requirements.txt
-
-## Dataset Overview
-
-Start with ```data_analysis.ipynb``` to get to know the dataset and look at some samples.
-
-## Augmentation Pipeline
-
-## Benchmarking with YOLO26
-
-## Support
-For support, write: stella.wermuth@hsbi.de

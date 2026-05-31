@@ -1,3 +1,8 @@
+
+# plots and videos generated for the paper
+paper_plots/*
+video_samples/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
