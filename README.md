@@ -65,12 +65,12 @@ For support, write: stella.wermuth@hsbi.de
 │   ├── augmentation_pipeline.ipynb
 │   └── augutils.py
 │
-├── paper_plots/             # dir for paper-ready plots and Times-font
-├── video_samples/           # dir to save videos
+├── plots/             # dir for plots and Times-font
+├── videos/            # dir to save videos
 
 │
 ├── data_analysis.ipynb      # data analysis (except bounding box sizes)
-├── paper_ready_PMOF_samples.ipynb  # samples (train & val& bg), in paper-ready format
+├── data_visualization.ipynb  # samples (train & val& bg), in paper-ready format
 │
 ├── requirements.txt
 └── README.md

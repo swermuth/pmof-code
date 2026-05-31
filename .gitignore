@@ -1,7 +1,7 @@
 
 # plots and videos generated for the paper
-paper_plots/*
-video_samples/*
+plots/*
+videos/*
 benchmarks/dataset_txt/*.txt
 benchmarks/yaml/*.yaml
 benchmarks/runs/obb/*
@@ -224,3 +224,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Keep empty directories by allowing placeholder files
+!**/.gitkeep
+!**/.gitignore

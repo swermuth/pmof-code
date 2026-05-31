@@ -40,10 +40,10 @@ def save_video(frames, output_path=None, frame_limit=None, fps=10, preview=False
 
 
     if not output_path:
-        if not os.path.isdir("video_samples"):
-            os.mkdir('video_samples')
+        if not os.path.isdir("videos"):
+            os.mkdir('videos')
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        output_path = f"video_samples/{timestamp}_video.mp4"
+        output_path = f"videos/{timestamp}_video.mp4"
         
     height, width, _ = frames[0].shape
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")  # mp4 codec
