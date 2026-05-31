@@ -63,8 +63,7 @@ For support, write: stella.wermuth@hsbi.de
 │
 ├── augmentation/            #generate augemented frames
 │   ├── augmentation_pipeline.ipynb
-│   ├── augutils.py
-│   └── bg_augmentation.ipynb
+│   └── augutils.py
 │
 ├── paper_plots/             # dir for paper-ready plots and Times-font
 ├── video_samples/           # dir to save videos
@@ -72,7 +71,6 @@ For support, write: stella.wermuth@hsbi.de
 │
 ├── data_analysis.ipynb      # data analysis (except bounding box sizes)
 ├── paper_ready_PMOF_samples.ipynb  # samples (train & val& bg), in paper-ready format
-├── paper_ready_aug_samples.ipynb    # samples of aug CEPDOF, aug PMOF and HABBOF in paper-ready format
 │
 ├── requirements.txt
 └── README.md
