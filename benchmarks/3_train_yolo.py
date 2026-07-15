@@ -6,7 +6,7 @@ import subprocess
 print('Lets start!')
 
 epochs = 20
-model_size = 's'
+model_size = 'm'
 img_size = 1024
 
 data_base_dir = '/home/stella/computer_vision/pmof-code/benchmarks/yaml'
@@ -41,7 +41,7 @@ for dataset in datasets:
     # Run PVAL on GPU 0
     processes.append(
         subprocess.Popen([
-            "python", "find_best_epoch.py",
+            "python", "4_find_best_epoch.py",
             name,
             "Pval",
             "0"
@@ -51,7 +51,7 @@ for dataset in datasets:
     # Run HVAL on GPU 0
     processes.append(
         subprocess.Popen([
-            "python", "find_best_epoch.py",
+            "python", "4_find_best_epoch.py",
             name,
             "Hval",
             "0"
