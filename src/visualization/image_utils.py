@@ -8,7 +8,7 @@ from src.data import read_annotation
 from src.visualization import colorstr_to_bgr
 from src.utils import logger, DATA_BASE_DIR
 
-def imgid_to_imgarray(image_id, annotated=False, data_base_dir=DATA_BASE_DIR, actions=True):
+def imgid_to_imgarray(image_id, annotated=False, data_base_dir=DATA_BASE_DIR, actions=True, only_person=False):
     """
     Returns numpy array of image with or without bounding boxes.
 
@@ -25,6 +25,9 @@ def imgid_to_imgarray(image_id, annotated=False, data_base_dir=DATA_BASE_DIR, ac
 
     actions: Boolean (optional)
         if False: label class "person" instead of action
+
+    only_person: Boolean (optional)
+        if True: only display bounding boxes for persons
 
     Returns
     -------
@@ -52,6 +55,9 @@ def imgid_to_imgarray(image_id, annotated=False, data_base_dir=DATA_BASE_DIR, ac
                 label = annotation.category_name
                 if actions: 
                     label = annotation.action or annotation.category_name
+                if only_person:
+                    if label != "person":
+                        continue
                 color = VIZ_PARAMS['gt_bbox_colors'][label]
                 cv2.polylines(BGR_img, [box_coords], isClosed=True, color=colorstr_to_bgr(color), thickness=VIZ_PARAMS['bbox_lines']['thickness'])
                 # Build legend handle

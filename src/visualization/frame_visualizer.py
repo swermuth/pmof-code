@@ -69,12 +69,14 @@ class BoxDrawer:
 
         return label, color
     
-    def draw_gt(self, img_bgr, annotation, actions=False):
+    def draw_gt(self, img_bgr, annotation, actions=False, gt_person_only=False):
         """ Draw ground truth bounding box on image array. Return label and color used. """
         if annotation.occluded:
             return None, None  # skip occluded boxes
-        bbox_coords = np.array(annotation.xyxyxyxy).reshape(4, 2).astype(int)
         label = annotation.category_name
+        if gt_person_only and label != "person":
+            return None, None
+        bbox_coords = np.array(annotation.xyxyxyxy).reshape(4, 2).astype(int)
         if actions: 
             label = annotation.action or annotation.category_name
         color = self.gt_colors.get(label, (0, 255, 0))  # default green if label not found
@@ -108,8 +110,8 @@ class FrameVisualizer:
         )
         self.legend_builder = LegendBuilder(linewidth=viz_params['legend']['linewidth'] if 'legend' in self.viz_params else 6)
 
-    def visualize_results(self, results, actions=False, display_gt=True):
-        """ Visualize prediction results by drawing prediction and gt boxes, building legend, overlaying legend on frames. Option to display actions as labels. Default is False (show category names instead of actions)"""
+    def visualize_results(self, results, actions=False, display_gt=True, gt_person_only=False):
+        """ Visualize prediction results by drawing prediction and gt boxes, building legend, overlaying legend on frames. Option to display actions as labels. Default is False (show category names instead of actions).       """   
         frames = {}
         for result in tqdm(results, desc="Visualizing results"):
             image_id = Path(result.path).stem
@@ -125,7 +127,7 @@ class FrameVisualizer:
                 annotation_path = imgid_to_annpath(data_base_dir=self.data_base_dir, image_id=image_id)
                 annotations = read_annotation(annotation_path=annotation_path, image_id=image_id)
                 for ann in annotations:
-                    label, color = self.box_drawer.draw_gt(img_bgr, ann, actions=actions)
+                    label, color = self.box_drawer.draw_gt(img_bgr, ann, actions=actions, gt_person_only=gt_person_only)
                     if label and color:
                         self.legend_builder.add_handle(f"GT {label}", color)
             
@@ -134,7 +136,7 @@ class FrameVisualizer:
             frames[image_id] = out_rgb
         return frames
 
-    def visualize_groundtruth(self, image_ids, actions):
+    def visualize_groundtruth(self, image_ids, actions, gt_person_only=False):
         """ 
         Visualize only ground truth drawing gt boxes, building legend, overlaying legend on frames. 
 
@@ -145,6 +147,9 @@ class FrameVisualizer:
 
         actions: Boolean
             if True, the action will be become the label, if false "person" will be the label
+
+        gt_person_only: Boolean
+            if True, only "person" category annotations are drawn (drops bag/clothing/suitcase)
 
         Returns
         -----
@@ -159,7 +164,7 @@ class FrameVisualizer:
             annotation_path = imgid_to_annpath(data_base_dir=self.data_base_dir, image_id=image_id)
             annotations = read_annotation(annotation_path=annotation_path, image_id=image_id)
             for ann in annotations:
-                label, color = self.box_drawer.draw_gt(img_bgr, ann, actions=actions)
+                label, color = self.box_drawer.draw_gt(img_bgr, ann, actions=actions, gt_person_only=gt_person_only)
                 if label and color:
                     self.legend_builder.add_handle(f"GT {label}", color)
             
@@ -186,14 +191,14 @@ class FrameVisualizer:
         img_bgr[y1:y2, x1:x2] = (alpha * legend_bgr + (1 - alpha) * img_bgr[y1:y2, x1:x2]).astype(np.uint8)
         return img_bgr
     
-def results_to_frames(results, data_base_dir, viz_params=VIZ_PARAMS, actions=None, display_gt=True):
+def results_to_frames(results, data_base_dir, viz_params=VIZ_PARAMS, actions=None, display_gt=True, gt_person_only=False):
     """Visualize results from yolo11-obb and return frames as dict of image arrays. """
     visualizer = FrameVisualizer(data_base_dir=data_base_dir, viz_params=viz_params)
-    frames = visualizer.visualize_results(results, actions=actions, display_gt=display_gt)
+    frames = visualizer.visualize_results(results, actions=actions, display_gt=display_gt, gt_person_only=gt_person_only)
     return frames
 
-def imageids_to_gtframes(image_ids, data_base_dir, actions=None, viz_params=VIZ_PARAMS):
+def imageids_to_gtframes(image_ids, data_base_dir, actions=None, gt_person_only=False, viz_params=VIZ_PARAMS):
     """Visualize results from yolo11-obb and return frames as dict of image arrays. """
     visualizer = FrameVisualizer(data_base_dir=data_base_dir, viz_params=viz_params)
-    frames = visualizer.visualize_groundtruth(image_ids, actions=actions)
+    frames = visualizer.visualize_groundtruth(image_ids, actions=actions, gt_person_only=gt_person_only)
     return frames
