@@ -5,6 +5,7 @@ videos/*
 benchmarks/dataset_txt/*.txt
 benchmarks/yaml/*.yaml
 benchmarks/runs/obb/*
+*.pt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
